@@ -1,0 +1,15 @@
+
+
+Introduction:
+The retail and e-commerce industry generates large volumes of transactional data from product sales, customer purchases, and inventory movements. 
+Organizations often struggle to transform this raw data into actionable insights that support strategic decision-making. Business Intelli-gence dashboards and 
+analytical tools play a crucial role in helping organizations monitor prod-uct performance, identify revenue drivers, and optimize product portfolios.
+This project presents the development of a Coffee Roasters Sales Performance Dashboard, built using Python, Streamlit, SQLite, and Plotly. The dashboard 
+consolidates sales and product performance data into an interactive analytics platform that enables users to evaluate revenue trends, product contribution, 
+category performance, and revenue concentration. The applica-tion includes modules such as Product KPI Monitoring, Pareto Analysis, Category Distribution Analysis, 
+ABC Classification, and Product Portfolio Analysis.
+From a business perspective, the dashboard demonstrates how data visualization and analytics can improve decision-making by identifying high-performing products, 
+understanding cus-tomer purchasing patterns, and highlighting products that contribute most significantly to over-all revenue. The project transforms complex 
+transactional data into intuitive visualizations that support both operational monitoring and strategic planning.
+
+(Complete detail in Coffee_roasters PDF)
