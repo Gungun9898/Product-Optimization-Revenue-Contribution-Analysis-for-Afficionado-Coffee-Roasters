@@ -128,7 +128,10 @@ div[data-testid="stMetricLabel"] {{
 </style>
 """, unsafe_allow_html=True)
 
-DB_PATH = "coffee_roasters.db"
+from pathlib import Path
+
+BASE_DIR = Path(__file__).parent
+DB_PATH = BASE_DIR / "coffee_roasters.db"
 
 @st.cache_data
 def load_data():
