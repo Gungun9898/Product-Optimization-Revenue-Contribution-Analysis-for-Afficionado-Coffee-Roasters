@@ -8,15 +8,17 @@ from pathlib import Path
 def get_base64_image(image_path):
     with open(image_path, "rb") as img:
         return base64.b64encode(img.read()).decode()
-    
+        
 BASE_DIR = Path(__file__).parent
 
 bg_image = get_base64_image(BASE_DIR / "front_page.jpg")
 
+DB_PATH = BASE_DIR / "coffee_roasters.db"
+
 #st.write("Image loaded:", len(bg_image))    
+
+
 st.set_page_config(page_title="Coffee Roasters KPI App", layout="wide")
-
-
 
 st.markdown(f"""
 <style>
@@ -131,8 +133,6 @@ div[data-testid="stMetricLabel"] {{
 
 </style>
 """, unsafe_allow_html=True)
-
-DB_PATH = BASE_DIR / "coffee_roasters.db"
 
 @st.cache_data
 def load_data():
