@@ -3,12 +3,16 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 import base64
+from pathlib import Path
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as img:
         return base64.b64encode(img.read()).decode()
     
-bg_image = get_base64_image(r"C:\Users\gunja\Documents\Unified_portal\E-commerce\python\front_page.jpg")
+BASE_DIR = Path(__file__).parent
+
+bg_image = get_base64_image(BASE_DIR / "front_page.jpg")
+
 #st.write("Image loaded:", len(bg_image))    
 st.set_page_config(page_title="Coffee Roasters KPI App", layout="wide")
 
@@ -128,9 +132,6 @@ div[data-testid="stMetricLabel"] {{
 </style>
 """, unsafe_allow_html=True)
 
-from pathlib import Path
-
-BASE_DIR = Path(__file__).parent
 DB_PATH = BASE_DIR / "coffee_roasters.db"
 
 @st.cache_data
