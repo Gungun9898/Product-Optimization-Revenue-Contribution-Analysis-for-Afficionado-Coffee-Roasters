@@ -273,7 +273,7 @@ with tab1:
     line_width=3,
     yref="y2"
 )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     st.markdown("</div>", unsafe_allow_html=True)
 
     top80 = filtered_pareto[
@@ -282,7 +282,7 @@ with tab1:
         ["product_detail","product_category","revenue_rank","total_revenue","revenue_share_pct","cum_revenue_pct"]
     ]
     st.subheader("Products Contributing to Top 80% of Revenue")
-    st.dataframe(top80, use_container_width=True)
+    st.dataframe(top80, width="stretch")
 
 with tab2:
     st.subheader("Category Distribution")
@@ -304,7 +304,7 @@ with tab2:
     ]
 )
     fig_cat.update_layout(height=450, xaxis_title="", yaxis_title="Total Revenue", showlegend=False)
-    st.plotly_chart(fig_cat, use_container_width=True)
+    st.plotly_chart(fig_cat, width="stretch")
 
     st.dataframe(
     category_df[
@@ -315,5 +315,5 @@ with tab2:
             "category_revenue_share_pct"
         ]
     ],
-    use_container_width=True
+    width="stretch"
 )
