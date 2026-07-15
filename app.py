@@ -11,7 +11,7 @@ def get_base64_image(image_path):
         
 BASE_DIR = Path(__file__).parent
 
-#bg_image = get_base64_image(BASE_DIR / "front_page.jpg")
+bg_image = get_base64_image(BASE_DIR / "front_page.jpg")
 
 DB_PATH = BASE_DIR / "coffee_roasters.db"
 
