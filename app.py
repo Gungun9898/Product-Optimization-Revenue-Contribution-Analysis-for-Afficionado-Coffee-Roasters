@@ -11,7 +11,7 @@ def get_base64_image(image_path):
         
 BASE_DIR = Path(__file__).parent
 
-bg_image = get_base64_image(BASE_DIR / "front_page.jpg")
+#bg_image = get_base64_image(BASE_DIR / "front_page.jpg")
 
 DB_PATH = BASE_DIR / "coffee_roasters.db"
 
@@ -136,14 +136,32 @@ div[data-testid="stMetricLabel"] {{
 
 @st.cache_data
 def load_data():
+    st.write("🔹 Database path:", DB_PATH)
+    st.write("🔹 Database exists:", DB_PATH.exists())
+
     conn = sqlite3.connect(DB_PATH)
+
+    views = pd.read_sql_query(
+        "SELECT type, name FROM sqlite_master ORDER BY type, name",
+        conn
+    )
+    st.write("🔹 Objects in database")
+    st.dataframe(views)
+
     product_df = pd.read_sql_query("SELECT * FROM vw_product_kpi", conn)
     category_df = pd.read_sql_query("SELECT * FROM vw_category_kpi", conn)
     pareto_df = pd.read_sql_query("SELECT * FROM vw_product_pareto", conn)
+
     conn.close()
+
+    st.write("✅ Product rows:", len(product_df))
+    st.write("✅ Category rows:", len(category_df))
+    st.write("✅ Pareto rows:", len(pareto_df))
+
     return product_df, category_df, pareto_df
 
 product_df, category_df, pareto_df = load_data()
+
 # Standardize column names
 product_df.columns = product_df.columns.str.lower().str.strip()
 category_df.columns = category_df.columns.str.lower().str.strip()
