@@ -154,6 +154,9 @@ def load_data():
 
     return product_df, category_df, pareto_df
 
+product_df, category_df, pareto_df = load_data()
+
+
 # Standardize column names
 product_df.columns = product_df.columns.str.lower().str.strip()
 category_df.columns = category_df.columns.str.lower().str.strip()
