@@ -120,74 +120,37 @@ ABC Product Analysis and Market Basket Analysis from the same SQLite database
 """, unsafe_allow_html=True)
 
 
-DB_PATH = "coffee_roasters.db"
-
-
 @st.cache_data
 def load_data():
-    conn = sqlite3.connect(DB_PATH)
+    with sqlite3.connect(DB_PATH) as conn:
 
-    product_df = pd.read_sql_query("SELECT * FROM vw_product_kpi", conn)
-    pareto_df = pd.read_sql_query("SELECT * FROM vw_product_pareto", conn)
+        product_df = pd.read_sql_query(
+            "SELECT * FROM vw_product_kpi", conn
+        )
 
-    product_df.columns = product_df.columns.str.lower().str.strip()
-    pareto_df.columns = pareto_df.columns.str.lower().str.strip()
+        pareto_df = pd.read_sql_query(
+            "SELECT * FROM vw_product_pareto", conn
+        )
 
-    basket_df = pd.DataFrame()
-    basket_error = None
+        product_df.columns = product_df.columns.str.lower().str.strip()
+        pareto_df.columns = pareto_df.columns.str.lower().str.strip()
 
-    basket_queries = [
-        """
-        SELECT
-            a.product_detail AS product_1,
-            b.product_detail AS product_2,
-            COUNT(DISTINCT a.transaction_id) AS pair_count
-         FROM vw_transactions_clean a
-         JOIN vw_transactions_clean b
-            ON a.transaction_id = b.transaction_id
-            AND a.product_id < b.product_id
-        GROUP BY a.product_detail, b.product_detail
-        HAVING COUNT(DISTINCT a.transaction_id) >= 2
-        ORDER BY pair_count DESC
-        """,
-        """
-        SELECT
-            a.product_detail AS product_1,
-            b.product_detail AS product_2,
-            COUNT(*) AS pair_count
-        FROM transactions_clean a
-        JOIN transactions_clean b
-            ON a.transaction_id = b.transaction_id
-           AND a.product_id < b.product_id
-        GROUP BY a.product_detail, b.product_detail
-        HAVING COUNT(*) >= 2
-        ORDER BY pair_count DESC
-        """,
-        """
-        SELECT
-            a.product_detail AS product_1,
-            b.product_detail AS product_2,
-            COUNT(*) AS pair_count
-        FROM transactions a
-        JOIN transactions b
-            ON a.transaction_id = b.transaction_id
-           AND a.product_id < b.product_id
-        GROUP BY a.product_detail, b.product_detail
-        HAVING COUNT(*) >= 2
-        ORDER BY pair_count DESC
-        """
-    ]
+        basket_df = pd.DataFrame()
+        basket_error = None
 
-    for query in basket_queries:
-        try:
-            basket_df = pd.read_sql_query(query, conn)
-            basket_df.columns = basket_df.columns.str.lower().str.strip()
-            basket_error = None
-            break
-        except Exception as e:
-            basket_error = str(e)
+        basket_queries = [
+            ...
+        ]
 
-    conn.close()
+        for query in basket_queries:
+            try:
+                basket_df = pd.read_sql_query(query, conn)
+                basket_df.columns = basket_df.columns.str.lower().str.strip()
+                basket_error = None
+                break
+            except Exception as e:
+                basket_error = str(e)
+
     return product_df, pareto_df, basket_df, basket_error
 
 
@@ -287,7 +250,9 @@ with tabs[0]:
                 yaxis_title="Total Revenue",
                 height=420
             )
-            st.plotly_chart(fig_abc_bar, use_container_width=True)
+            st.plotly_chart(fig_abc_bar, width="stretch")
+                        
+
 
         with col2:
             fig_abc_pie = px.pie(
@@ -301,8 +266,7 @@ with tabs[0]:
                 title="Product Count by ABC Class",
                 height=420
             )
-            st.plotly_chart(fig_abc_pie, use_container_width=True)
-
+            st.plotly_chart(fig_abc_pie, width="stretch")
         
 
         st.markdown("### ABC Product Table")
@@ -339,7 +303,7 @@ with tabs[0]:
             })
         )
 
-        st.dataframe(styled_abc_table, use_container_width=True)
+        st.dataframe(styled_abc_table, width="stretch")
 
         st.info(
             "A = top revenue-driving products up to 80% cumulative revenue, "
@@ -420,8 +384,8 @@ with tabs[1]:
 
     st.plotly_chart(
         fig_matrix,
-        use_container_width=True
-    )
+        width="stretch"
+   )
 
     st.markdown("---")
 
@@ -482,7 +446,7 @@ with tabs[1]:
 
     st.plotly_chart(
         fig_concentration,
-        use_container_width=True
+        width="stretch"
     )
 
     st.markdown("### Products Driving 80% Revenue")
@@ -507,7 +471,7 @@ with tabs[1]:
                 "cum_revenue_pct": "Cumulative Revenue %"
             }
         ),
-        use_container_width=True
+        width="stretch"
     )
 
     st.success(
