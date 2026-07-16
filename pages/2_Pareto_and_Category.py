@@ -22,7 +22,7 @@ def get_base64_image(image_path):
         return base64.b64encode(img.read()).decode()
 
 # Load background image
-bg_image = get_base64_image(BASE_DIR / "bakery-coffee-shop.jpg")
+bg_image = get_base64_image(BASE_DIR / "Bakery.jpg")
 
 st.markdown(f"""
 <style>
@@ -90,7 +90,7 @@ h2,h3{
 </style>
 """, unsafe_allow_html=True)
 
-DB_PATH = "coffee_roasters.db"
+
 
 @st.cache_data
 def load_data():
@@ -273,7 +273,7 @@ with tab1:
     line_width=3,
     yref="y2"
 )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
     top80 = filtered_pareto[
@@ -282,7 +282,7 @@ with tab1:
         ["product_detail","product_category","revenue_rank","total_revenue","revenue_share_pct","cum_revenue_pct"]
     ]
     st.subheader("Products Contributing to Top 80% of Revenue")
-    st.dataframe(top80, width="stretch")
+    st.dataframe(top80, use_container_width=True)
 
 with tab2:
     st.subheader("Category Distribution")
@@ -304,7 +304,7 @@ with tab2:
     ]
 )
     fig_cat.update_layout(height=450, xaxis_title="", yaxis_title="Total Revenue", showlegend=False)
-    st.plotly_chart(fig_cat, width="stretch")
+    st.plotly_chart(fig_cat, use_container_width=True)
 
     st.dataframe(
     category_df[
@@ -315,5 +315,7 @@ with tab2:
             "category_revenue_share_pct"
         ]
     ],
-    width="stretch"
+    use_container_width=True
 )
+
+
