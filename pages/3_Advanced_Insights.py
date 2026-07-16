@@ -138,9 +138,7 @@ def load_data():
         basket_df = pd.DataFrame()
         basket_error = None
 
-        basket_queries = [
-            ...
-        ]
+        basket_queries = []
 
         for query in basket_queries:
             try:
@@ -250,7 +248,7 @@ with tabs[0]:
                 yaxis_title="Total Revenue",
                 height=420
             )
-            st.plotly_chart(fig_abc_bar, width="stretch")
+            st.plotly_chart(fig_abc_bar, use_container_width=True)
                         
 
 
@@ -266,7 +264,7 @@ with tabs[0]:
                 title="Product Count by ABC Class",
                 height=420
             )
-            st.plotly_chart(fig_abc_pie, width="stretch")
+            st.plotly_chart(fig_abc_pie, use_container_width=True)
         
 
         st.markdown("### ABC Product Table")
@@ -303,7 +301,7 @@ with tabs[0]:
             })
         )
 
-        st.dataframe(styled_abc_table, width="stretch")
+        st.dataframe(styled_abc_table, use_container_width=True)
 
         st.info(
             "A = top revenue-driving products up to 80% cumulative revenue, "
@@ -384,7 +382,7 @@ with tabs[1]:
 
     st.plotly_chart(
         fig_matrix,
-        width="stretch"
+        use_container_width=True
    )
 
     st.markdown("---")
@@ -446,7 +444,7 @@ with tabs[1]:
 
     st.plotly_chart(
         fig_concentration,
-        width="stretch"
+        use_container_width=True
     )
 
     st.markdown("### Products Driving 80% Revenue")
@@ -471,9 +469,11 @@ with tabs[1]:
                 "cum_revenue_pct": "Cumulative Revenue %"
             }
         ),
-        width="stretch"
+        use_container_width=True
     )
 
     st.success(
         f"{products_80} out of {total_products} products generate approximately 80% of total revenue."
     )
+
+
